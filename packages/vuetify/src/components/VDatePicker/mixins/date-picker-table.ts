@@ -107,8 +107,8 @@ export default mixins(
       const isCurrent = value === this.current
       const setColor = isSelected ? this.setBackgroundColor : this.setTextColor
 
-      //AT -> Added support for date-range
-      //const color = (isSelected || isCurrent) && (this.color || 'accent')
+      //  AT -> Added support for date-range
+      //  const color = (isSelected || isCurrent) && (this.color || 'accent')
       const color = this.getFinalColor(value, (isSelected || isCurrent) && (this.color || 'accent'))
 
       return this.$createElement('button', setColor(color, {
@@ -129,9 +129,9 @@ export default mixins(
       ])
     },
     getFinalColor (date: string, color: string | false) {
-      //AT -> Added support for date-range
+      //  AT -> Added support for date-range
       const colorInRange = Array.isArray(this.value) && isDateInRange(date, this.value)
-      const colorRangeNode = Array.isArray(this.value) && (this.value.indexOf(date) === 0 || date === this.value[this.value.length -1])   
+      const colorRangeNode = Array.isArray(this.value) && (this.value.indexOf(date) === 0 || date === this.value[this.value.length - 1])
       return colorRangeNode ? 'accent darken-4' : colorInRange ? 'accent darken-2' : color
     },
     getEventColors (date: string) {
