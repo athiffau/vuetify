@@ -9,7 +9,7 @@ import Themeable from '../../../mixins/themeable'
 
 // Utils
 import isDateAllowed, { AllowedDateFunction } from '../util/isDateAllowed'
-import isDateInRange, { isHoverAfterStartDate }  from '../util/isDateInRange'
+import isDateInRange, { isHoverAfterStartDate } from '../util/isDateInRange'
 import mixins from '../../../util/mixins'
 
 // Types
@@ -92,7 +92,14 @@ export default mixins(
   },
 
   methods: {
-    genButtonClasses (isAllowed: boolean, isFloating: boolean, isSelected: boolean, isCurrent: boolean, isRange: boolean, isHover: boolean) {
+    genButtonClasses (
+      isAllowed: boolean,
+      isFloating: boolean,
+      isSelected: boolean,
+      isCurrent: boolean,
+      isRange: boolean,
+      isHover: boolean
+    ) {
       return {
         'v-btn--range': isRange,
         'v-btn--range-hover': isRange && isHover,
@@ -147,7 +154,7 @@ export default mixins(
         domProps: {
           disabled: this.disabled || !isAllowed
         },
-        on: this.genButtonEvents(value, isAllowed, mouseEventType),
+        on: this.genButtonEvents(value, isAllowed, mouseEventType)
       }), [
         this.$createElement('div', {
           staticClass: 'v-btn__content'
@@ -157,7 +164,7 @@ export default mixins(
     },
     getFinalColor (date: string, color: string | false) {
       const colorInRange = Array.isArray(this.value) && isDateInRange(date, this.value)
-      const colorInRangeHover = Array.isArray(this.value) && (this.value.length == 1) && (typeof this.value[0] === 'string') && isHoverAfterStartDate(date, this.value[0], this.hover ? this.hover : this.hoverLink)
+      const colorInRangeHover = Array.isArray(this.value) && (this.value.length === 1) && (typeof this.value[0] === 'string') && isHoverAfterStartDate(date, this.value[0], this.hover ? this.hover : this.hoverLink)
       const colorRangeNode = Array.isArray(this.value) && (this.value.indexOf(date) === 0 || date === this.value[this.value.length - 1])
       return colorRangeNode ? 'accent darken-4' : colorInRange ? 'accent darken-2' : colorInRangeHover ? 'accent darken-3' : color
     },
