@@ -14,3 +14,6 @@ lerna-debug.log
 
 # Istanbul coverage
 coverage/
+
+# File types
+packages/vuetify/*.dat

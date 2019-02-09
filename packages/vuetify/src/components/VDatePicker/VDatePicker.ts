@@ -62,6 +62,7 @@ export default mixins(
     },
     // Function formatting the tableDate in the day/month table header
     headerDateFormat: Function as PropValidator<DatePickerFormatter | undefined>,
+    hoverLink: String,
     locale: {
       type: String,
       default: 'en-us'
@@ -80,6 +81,7 @@ export default mixins(
       type: String,
       default: '$vuetify.icons.prev'
     },
+    range: Boolean,
     reactive: Boolean,
     readonly: Boolean,
     scrollable: Boolean,
@@ -110,6 +112,7 @@ export default mixins(
       inputMonth: null as number | null,
       inputYear: null as number | null,
       isReversing: false,
+      hovering: '',
       now,
       // tableDate is a string in 'YYYY' / 'YYYY-M' format (leading zero for month is not required)
       tableDate: (() => {
@@ -236,6 +239,9 @@ export default mixins(
           .filter(this.isDateAllowed)
         this.$emit('input', this.multiple ? output : output[0])
       }
+    },
+    hovering (value: String, prev: string) {
+      this.$emit('hoverLink', value)
     }
   },
 
@@ -354,10 +360,12 @@ export default mixins(
           eventColor: this.eventColor,
           firstDayOfWeek: this.firstDayOfWeek,
           format: this.dayFormat,
+          hover: this.hovering,
           light: this.light,
           locale: this.locale,
           min: this.min,
           max: this.max,
+          range: this.range,
           readonly: this.readonly,
           scrollable: this.scrollable,
           showWeek: this.showWeek,
@@ -369,8 +377,10 @@ export default mixins(
         on: {
           input: this.dateClick,
           tableDate: (value: string) => this.tableDate = value,
+          hover: (value: string) => this.hovering = value,
           'click:date': (value: string) => this.$emit('click:date', value),
-          'dblclick:date': (value: string) => this.$emit('dblclick:date', value)
+          'dblclick:date': (value: string) => this.$emit('dblclick:date', value),
+          'hoverLink': (value: string) => this.$emit('hoverLink', value)
         }
       })
     },
