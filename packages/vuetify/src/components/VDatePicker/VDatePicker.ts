@@ -361,6 +361,7 @@ export default mixins(
           firstDayOfWeek: this.firstDayOfWeek,
           format: this.dayFormat,
           hover: this.hovering,
+          hoverLink: this.hoverLink,
           light: this.light,
           locale: this.locale,
           min: this.min,
