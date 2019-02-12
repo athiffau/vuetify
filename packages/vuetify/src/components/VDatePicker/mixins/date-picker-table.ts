@@ -98,11 +98,15 @@ export default mixins(
       isSelected: boolean,
       isCurrent: boolean,
       isRange: boolean,
-      isHover: boolean
+      isHover: boolean,
+      isRangeStart: boolean,
+      isRangeEnd: boolean
     ) {
       return {
         'v-btn--range': isRange,
         'v-btn--range-hover': isRange && isHover,
+        'v-btn--range-start': isRange && isRangeStart,
+        'v-btn--range-end': isRange && isRangeEnd,
         'v-btn--active': isSelected,
         'v-btn--flat': !isSelected,
         'v-btn--icon': isSelected && isAllowed && isFloating,
@@ -136,6 +140,8 @@ export default mixins(
       const isCurrent = value === this.current
       const isHover = value === this.hovering
       const isRange = this.range
+      const isRangeStart = isRange && value === this.value[0]
+      const isRangeEnd = isRange && value === this.value[1]
       const setColor = isSelected || isRange ? this.setBackgroundColor : this.setTextColor
 
       //  AT -> Added support for date-range
@@ -144,7 +150,7 @@ export default mixins(
 
       return this.$createElement('button', setColor(color, {
         staticClass: 'v-btn',
-        'class': this.genButtonClasses(isAllowed, isFloating, isSelected, isCurrent, isRange, isHover),
+        'class': this.genButtonClasses(isAllowed, isFloating, isSelected, isCurrent, isRange, isHover, isRangeStart, isRangeEnd),
         attrs: {
           type: 'button'
         },

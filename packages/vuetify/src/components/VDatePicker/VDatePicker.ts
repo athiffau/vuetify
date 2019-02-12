@@ -28,6 +28,7 @@ type DatePickerMultipleFormatter = (date: string[]) => string
 interface Formatters {
   year: DatePickerFormatter
   titleDate: DatePickerFormatter | DatePickerMultipleFormatter
+  titleMonthYear: DatePickerFormatter
 }
 
 // Adds leading zero to month/day if necessary, returns 'YYYY' if type = 'year',
@@ -173,7 +174,8 @@ export default mixins(
     formatters (): Formatters {
       return {
         year: this.yearFormat || createNativeLocaleFormatter(this.locale, { year: 'numeric', timeZone: 'UTC' }, { length: 4 }),
-        titleDate: this.titleDateFormat || (this.multiple ? this.defaultTitleMultipleDateFormatter : this.defaultTitleDateFormatter)
+        titleDate: this.titleDateFormat || (this.multiple ? this.defaultTitleMultipleDateFormatter : this.defaultTitleDateFormatter),
+        titleMonthYear: this.defaultRangeTitleFormatter
       }
     },
     defaultTitleMultipleDateFormatter (): DatePickerMultipleFormatter {
@@ -200,9 +202,16 @@ export default mixins(
         .replace(', ', ',<br>')
 
       return this.landscape ? landscapeFormatter : titleDateFormatter
+    },
+    defaultRangeTitleFormatter (): DatePickerFormatter {
+      const titleRangeFormatter = createNativeLocaleFormatter(this.locale, {month: 'short', day: 'numeric', timeZone: 'UTC'}, {
+        start: 0,
+        length: 6
+      })
+  
+      return titleRangeFormatter
     }
   },
-
   watch: {
     tableDate (val: string, prev: string) {
       // Make a ISO 8601 strings from val and prev for comparision, otherwise it will incorrectly
@@ -215,6 +224,7 @@ export default mixins(
       if (val) {
         this.tableDate = val
       } else if (this.lastValue && this.type === 'date') {
+        console.log(`Replace date with ${this.lastValue}`)
         this.tableDate = sanitizeDateString(this.lastValue, 'month')
       } else if (this.lastValue && this.type === 'month') {
         this.tableDate = sanitizeDateString(this.lastValue, 'year')
@@ -227,6 +237,7 @@ export default mixins(
       if (!this.multiple && this.value && !this.pickerDate) {
         this.tableDate = sanitizeDateString(this.inputDate, this.type === 'month' ? 'year' : 'month')
       } else if (this.multiple && (this.value as string[]).length && !(oldValue as string[]).length && !this.pickerDate) {
+        console.log(`Replacing tableDate with ${this.inputDate}`)
         this.tableDate = sanitizeDateString(this.inputDate, this.type === 'month' ? 'year' : 'month')
       }
     },
