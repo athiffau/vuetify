@@ -204,11 +204,10 @@ export default mixins(
       return this.landscape ? landscapeFormatter : titleDateFormatter
     },
     defaultRangeTitleFormatter (): DatePickerFormatter {
-      const titleRangeFormatter = createNativeLocaleFormatter(this.locale, {month: 'short', day: 'numeric', timeZone: 'UTC'}, {
+      const titleRangeFormatter = createNativeLocaleFormatter(this.locale, { month: 'short', day: 'numeric', timeZone: 'UTC' }, {
         start: 0,
         length: 6
       })
-  
       return titleRangeFormatter
     }
   },
