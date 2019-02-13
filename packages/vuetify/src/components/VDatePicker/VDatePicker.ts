@@ -45,6 +45,10 @@ export default mixins(
   name: 'v-date-picker',
 
   props: {
+    allowDateChange: {
+      type: Boolean,
+      default: true
+    },
     allowedDates: Function as PropValidator<AllowedDateFunction | undefined>,
     // Function formatting the day in date picker table
     dayFormat: Function as PropValidator<AllowedDateFunction | undefined>,
@@ -339,6 +343,7 @@ export default mixins(
     genTableHeader () {
       return this.$createElement(VDatePickerHeader, {
         props: {
+          allowDateChange: this.allowDateChange,
           nextIcon: this.nextIcon,
           color: this.color,
           dark: this.dark,
