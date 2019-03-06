@@ -19,6 +19,7 @@ export default mixins(
   name: 'v-date-picker-title',
 
   props: {
+    allowDateChange: Boolean,
     date: {
       type: String,
       default: ''
@@ -66,7 +67,7 @@ export default mixins(
       return this.genPickerButton('selectingYear', true, [
         String(this.year),
         this.yearIcon ? this.genYearIcon() : null
-      ], false, 'v-date-picker-title__year')
+      ], !this.allowDateChange, 'v-date-picker-title__year')
     },
     genTitleText (): VNode {
       return this.$createElement('transition', {
@@ -81,7 +82,7 @@ export default mixins(
       ])
     },
     genTitleDate (): VNode {
-      return this.genPickerButton('selectingYear', false, [this.genTitleText()], false, 'v-date-picker-title__date')
+      return this.genPickerButton('selectingYear', false, [this.genTitleText()], !this.allowDateChange, 'v-date-picker-title__date')
     }
   },
 

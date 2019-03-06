@@ -17,6 +17,33 @@ function dateFromStr (strDate: string | null, deltaDay = 0, deltaMonth = 0, delt
   return null
 }
 
+export function isHoverAfterStartDate (startDate: any, hoveringDate: string): boolean {
+  const _std = dateFromStr(startDate)
+  const _htd = dateFromStr(hoveringDate)
+  return (_std && _htd)
+    ? _htd.getTime() > _std.getTime()
+    : false
+}
+
+export function isHoverBeforeStartDate (startDate: any, hoveringDate: string): boolean {
+  const _std = dateFromStr(startDate)
+  const _htd = dateFromStr(hoveringDate)
+  return (_std && _htd)
+    ? _htd.getTime() < _std.getTime()
+    : false
+}
+
+export function isDateInHoverRange (btnDate: string, startDate: any, hoveringDate: string): boolean {
+  const _me = dateFromStr(btnDate)
+  const _std = dateFromStr(startDate)
+  const _htd = dateFromStr(hoveringDate)
+
+  return (_std && _htd && _me)
+    ? (_me.getTime() > _std.getTime() && _me.getTime() <= _htd.getTime()) ||
+      (_me.getTime() < _std.getTime() && _me.getTime() >= _htd.getTime())
+    : false
+}
+
 export default function isDateInRange (date: string, range: any): boolean {
   const dateToCheck = dateFromStr(date)
 
@@ -31,14 +58,4 @@ export default function isDateInRange (date: string, range: any): boolean {
     }
   }
   return false
-}
-
-export function isHoverAfterStartDate (btnDate: string, startDate: any, hoveringDate: string): boolean {
-  const _me = dateFromStr(btnDate)
-  const _std = dateFromStr(startDate)
-  const _htd = dateFromStr(hoveringDate)
-
-  return (_std && _htd && _me)
-    ? _me.getTime() >= _std.getTime() && _me.getTime() <= _htd.getTime() && _std.getTime() < _htd.getTime()
-    : false
 }

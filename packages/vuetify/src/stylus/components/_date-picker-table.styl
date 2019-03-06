@@ -38,6 +38,25 @@ theme(v-date-picker-table, "v-date-picker-table")
     &.v-btn--active
       color: #fff
 
+    &--range
+      border-radius: unset
+      &:before
+        border-radius: unset 
+
+    &--range-start
+      border-top-left-radius: 5px
+      border-bottom-left-radius: 5px
+      &:before
+        border-top-left-radius: 5px
+        border-bottom-left-radius: 5px
+
+    &--range-end
+      border-top-right-radius: 5px
+      border-bottom-right-radius: 5px
+      &:before
+        border-top-right-radius: 5px
+        border-bottom-right-radius: 5px
+
 .v-date-picker-table--month
   td
     width: 33.333333%
