@@ -135,9 +135,9 @@ export default mixins(
       const isAllowed = isDateAllowed(value, this.min, this.max, this.allowedDates)
       const isSelected = value === this.value || (Array.isArray(this.value) && this.value.indexOf(value) !== -1)
       const isCurrent = value === this.current
-      const inView = mouseEventType === 'month' && formatter(this.viewing) === formatter(value)
       const isHover = value === this.hovering
       const isRange = this.range && this.value.length > 0
+      const inView = isRange ? mouseEventType === 'month' && formatter(this.viewing) === formatter(value) : false
       const isInRange = isDateInRange(value, this.value)
       const isRangeEnd = (isRange && (
         value === this.value[1] ||
